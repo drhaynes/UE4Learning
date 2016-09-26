@@ -1,6 +1,10 @@
 # Visual Studio 2015 user specific files
 .vs/
 
+# Xcode files
+**/xcuserdata
+contents.xcworkspacedata
+
 # Compiled Object files
 *.slo
 *.lo
