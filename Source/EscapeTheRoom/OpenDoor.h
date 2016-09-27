@@ -6,7 +6,7 @@
 #include "OpenDoor.generated.h"
 
 
-UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
+UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
 class ESCAPETHEROOM_API UOpenDoor : public UActorComponent
 {
 	GENERATED_BODY()
@@ -19,8 +19,18 @@ public:
 	virtual void BeginPlay() override;
 	
 	// Called every frame
-	virtual void TickComponent( float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction ) override;
+	virtual void TickComponent(float DeltaTime,
+                               ELevelTick TickType,
+                               FActorComponentTickFunction* ThisTickFunction) override;
 
-		
-	
+private:
+    UPROPERTY(VisibleAnywhere)
+    float OpenAngle = 90.f;
+
+    UPROPERTY(EditAnywhere)
+    ATriggerVolume *PressurePlate;
+
+    AActor *ActorThatOpens;
+
+    void OpenDoor();
 };

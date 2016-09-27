@@ -3,31 +3,20 @@
 #include "EscapeTheRoom.h"
 #include "PositionReport.h"
 
-
-// Sets default values for this component's properties
-UPositionReport::UPositionReport()
-{
-	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
-	// off to improve performance if you don't need them.
+UPositionReport::UPositionReport() {
 	bWantsBeginPlay = true;
 	PrimaryComponentTick.bCanEverTick = true;
 }
 
-
-// Called when the game starts
-void UPositionReport::BeginPlay()
-{
+void UPositionReport::BeginPlay() {
 	Super::BeginPlay();
     auto Name = GetOwner()->GetName();
     auto PositionText = GetOwner()->GetTransform().GetLocation().ToString();
     UE_LOG(LogTemp, Warning, TEXT("Position report is aliiiive on %s at %s"), *Name, *PositionText);
 }
 
-
-// Called every frame
-void UPositionReport::TickComponent( float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction )
-{
-	Super::TickComponent( DeltaTime, TickType, ThisTickFunction );
-
-	// ...
+void UPositionReport::TickComponent(float DeltaTime,
+                                    ELevelTick TickType,
+                                    FActorComponentTickFunction* ThisTickFunction) {
+	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 }
