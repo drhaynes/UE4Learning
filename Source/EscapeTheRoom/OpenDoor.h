@@ -30,7 +30,13 @@ private:
     UPROPERTY(EditAnywhere)
     ATriggerVolume *PressurePlate;
 
-    AActor *ActorThatOpens;
+    UPROPERTY(EditAnywhere)
+    float DoorCloseDelay = .5f;
 
-    void OpenDoor();
+    float LastDoorOpenTime;
+
+    AActor *ActorThatOpens;
+    AActor *Owner;
+
+    void SetDoorRotation(float NewRotation);
 };
