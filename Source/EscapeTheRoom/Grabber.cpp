@@ -26,11 +26,17 @@ void UGrabber::BeginPlay()
 }
 
 
-// Called every frame
-void UGrabber::TickComponent( float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction )
+void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
-	Super::TickComponent( DeltaTime, TickType, ThisTickFunction );
+	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+	auto PlayerController = GetWorld()->GetFirstPlayerController();
+	FVector Position;
+	FRotator Rotation;
+	PlayerController->GetPlayerViewPoint(Position, Rotation);
+	/*UE_LOG(LogTemp, Warning, TEXT("Grabber on player at %s, with rotation %s"), *Position.ToString(), *Rotation.ToString());*/
+	
+	FVector LineTraceEnd = Position + (Rotation.Vector() * Reach);
 
-	// ...
+	DrawDebugLine(GetWorld(), Position, LineTraceEnd, FColor(255, 0, 0), false, 0.f, .0f, 5.f);
 }
 
