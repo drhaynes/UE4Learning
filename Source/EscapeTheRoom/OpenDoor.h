@@ -35,8 +35,11 @@ private:
 
     float LastDoorOpenTime;
 
-    AActor *ActorThatOpens;
     AActor *Owner;
 
+    UPROPERTY(EditAnywhere)
+    float TriggerMass = 30.f;
+    
     void SetDoorRotation(float NewRotation);
+    float GetTotalMassOfActorsOnPlate();
 };
