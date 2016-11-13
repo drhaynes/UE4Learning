@@ -33,7 +33,15 @@ void UGrabber::ConfigureComponents() {
 void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
     Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-    // TODO: if physics handle attached, move object
+    if (PhysicsHandle->GrabbedComponent) {
+        auto PlayerController = GetWorld()->GetFirstPlayerController();
+        FVector Position;
+        FRotator Rotation;
+        PlayerController->GetPlayerViewPoint(Position, Rotation);
+        FVector LineTraceEnd = Position + (Rotation.Vector() * Reach);
+
+        PhysicsHandle->SetTargetLocation(LineTraceEnd);
+    }
 }
 
 const FHitResult UGrabber::GetFirstPhysicsBodyInReach() {
@@ -41,8 +49,8 @@ const FHitResult UGrabber::GetFirstPhysicsBodyInReach() {
     FVector Position;
     FRotator Rotation;
     PlayerController->GetPlayerViewPoint(Position, Rotation);
-
     FVector LineTraceEnd = Position + (Rotation.Vector() * Reach);
+
     FHitResult Hit;
     FCollisionQueryParams TraceParams = FCollisionQueryParams(FName(TEXT("")), false, GetOwner());
     GetWorld()->LineTraceSingleByObjectType(Hit, Position, LineTraceEnd, FCollisionObjectQueryParams(ECollisionChannel::ECC_PhysicsBody), TraceParams);
@@ -52,18 +60,21 @@ const FHitResult UGrabber::GetFirstPhysicsBodyInReach() {
 void UGrabber::Grab()
 {
     UE_LOG(LogTemp, Warning, TEXT("GRABBBBY"));
-    auto ThingHit = GetFirstPhysicsBodyInReach().Actor;
+    auto HitResult = GetFirstPhysicsBodyInReach();
+    auto ThingHit = HitResult.GetActor();
+    auto ComponentToGrab = HitResult.GetComponent();
 
-    if (ThingHit != nullptr) {
+    if (ThingHit) {
         UE_LOG(LogTemp, Warning, TEXT("Hit: %s"), *ThingHit->GetName());
+    }
 
-        // TODO: attach physics handle
+    if (ComponentToGrab) {
+        PhysicsHandle->GrabComponent(ComponentToGrab, NAME_None, ComponentToGrab->GetOwner()->GetActorLocation(), true);
     }
 }
 
 void UGrabber::Release()
 {
     UE_LOG(LogTemp, Warning, TEXT("DROPPED"));
-
-    // TODO: Release physics handle
+    PhysicsHandle->ReleaseComponent();
 }
