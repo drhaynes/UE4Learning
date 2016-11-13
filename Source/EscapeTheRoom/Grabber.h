@@ -2,9 +2,9 @@
 
 #pragma once
 
+#include "FLine.h"
 #include "Components/ActorComponent.h"
 #include "Grabber.generated.h"
-
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class ESCAPETHEROOM_API UGrabber : public UActorComponent
@@ -34,4 +34,5 @@ private:
     void Release();
 
     const FHitResult GetFirstPhysicsBodyInReach();
+    const FLine GetGrabLineFromPlayer();
 };
