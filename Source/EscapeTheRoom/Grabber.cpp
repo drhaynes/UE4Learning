@@ -19,7 +19,7 @@ void UGrabber::BeginPlay()
 
     PawnInputComponent = GetOwner()->FindComponentByClass<UInputComponent>();
     if (PawnInputComponent) {
-        
+        PawnInputComponent->BindAction("Grab", IE_Pressed, this, &UGrabber::Grab);
     } else {
         UE_LOG(LogTemp, Error, TEXT("%s: Missing input component."), *GetOwner()->GetName());
     }
@@ -48,3 +48,7 @@ void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 	}
 }
 
+void UGrabber::Grab()
+{
+    UE_LOG(LogTemp, Warning, TEXT("GRABBBBY"));
+}
