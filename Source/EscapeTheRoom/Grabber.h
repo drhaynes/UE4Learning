@@ -28,5 +28,10 @@ private:
     UPhysicsHandleComponent* PhysicsHandle = nullptr;
     UInputComponent* PawnInputComponent = nullptr;
 
+    void ConfigureComponents();
+
     void Grab();
+    void Release();
+
+    const FHitResult GetFirstPhysicsBodyInReach();
 };
