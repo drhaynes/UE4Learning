@@ -24,7 +24,7 @@ void UOpenDoor::TickComponent(float DeltaTime,
     const float TimeNow = GetWorld()->GetTimeSeconds();
 
     if (GetTotalMassOfActorsOnPlate() > TriggerMass) {
-        SetDoorRotation(-OpenAngle);
+        OnOpenRequest.Broadcast();
         LastDoorOpenTime = TimeNow;
     }
 
