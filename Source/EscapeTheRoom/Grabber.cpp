@@ -33,7 +33,9 @@ void UGrabber::ConfigureComponents() {
 void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
     Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-    if (PhysicsHandle->GrabbedComponent) {
+    if (!PhysicsHandle) {
+        return;
+    } else if (PhysicsHandle->GrabbedComponent) {
         PhysicsHandle->SetTargetLocation(GetGrabLineFromPlayer().End);
     }
 }
@@ -66,5 +68,7 @@ void UGrabber::Grab()
 
 void UGrabber::Release()
 {
-    PhysicsHandle->ReleaseComponent();
+    if (PhysicsHandle) {
+        PhysicsHandle->ReleaseComponent();
+    }
 }
